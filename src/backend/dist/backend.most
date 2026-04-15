@@ -1,0 +1,132 @@
+// Version: 1.0.0
+type CoinBalance__1017319302 =
+  {
+    var balance : Nat;
+    var dailyAdWatches : Nat;
+    var lastAdWatchDate : Timestamp__301639476;
+    var lastLoginDate : Timestamp__301639476;
+    var loginStreak : Nat;
+    referralCode : Text;
+    userId : UserId__158757552
+  };
+type CommentId__821569710 = Nat;
+type Comment__234140956 =
+  {
+    authorId : UserId__158757552;
+    createdAt : Timestamp__301639476;
+    id : CommentId__821569710;
+    text : Text;
+    videoId : VideoId__498652803
+  };
+type Data__159895909<T> = {var count : Nat__490723111; elements : [var ?T]};
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type ExternalBlob__246066408 = Blob;
+type Internal__667636161<T> =
+  {children : [var ?Node__92254746<T>]; data : Data__159895909<T>};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__520550824<T> = {data : Data__159895909<T>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Node__92254746<T> =
+  {#internal : Internal__667636161<T>; #leaf : Leaf__520550824<T>};
+type Timestamp__301639476 = Int;
+type UserId__158757552 = Principal;
+type UserProfile__277265826 =
+  {
+    avatarStorageKey : ?ExternalBlob__246066408;
+    bio : Text;
+    createdAt : Timestamp__301639476;
+    displayName : Text;
+    var followerCount : Nat;
+    var followingCount : Nat;
+    isPrivate : Bool;
+    userId : UserId__158757552;
+    username : Text
+  };
+type UserRole__1054455867 = {#admin; #guest; #user};
+type VideoId__498652803 = Nat;
+type Video__1035008865 =
+  {
+    caption : Text;
+    var commentsCount : Nat;
+    createdAt : Timestamp__301639476;
+    hashtags : [Text];
+    id : VideoId__498652803;
+    isPublished : Bool;
+    var likesCount : Nat;
+    storageKey : ExternalBlob__246066408;
+    uploaderId : UserId__158757552;
+    var viewsCount : Nat
+  };
+type WithdrawalId__526707137 = Nat;
+type WithdrawalRequest__1056071284 =
+  {
+    createdAt : Timestamp__301639476;
+    id : WithdrawalId__526707137;
+    rupeeAmount : Nat;
+    var status : WithdrawalStatus__177126800;
+    userId : UserId__158757552
+  };
+type WithdrawalStatus__177126800 = {#completed; #pending};
+actor {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1054455867>
+    };
+  stable coinBalances :
+    {
+      var root : Node__46230540<UserId__158757552, CoinBalance__1017319302>;
+      var size : Nat__490723111
+    };
+  stable commentCounter : [var Nat];
+  stable comments :
+    {
+      var root : Node__46230540<CommentId__821569710, Comment__234140956>;
+      var size : Nat__490723111
+    };
+  stable follows :
+    {
+      var root : Node__92254746<(UserId__158757552, UserId__158757552)>;
+      var size : Nat__490723111
+    };
+  stable hashtags :
+    {var root : Node__46230540<Text, Nat>; var size : Nat__490723111};
+  stable likes :
+    {
+      var root : Node__92254746<(VideoId__498652803, UserId__158757552)>;
+      var size : Nat__490723111
+    };
+  stable profiles :
+    {
+      var root : Node__46230540<UserId__158757552, UserProfile__277265826>;
+      var size : Nat__490723111
+    };
+  stable referralCodeIndex :
+    {
+      var root : Node__46230540<Text, UserId__158757552>;
+      var size : Nat__490723111
+    };
+  stable videoCounter : [var Nat];
+  stable videos :
+    {
+      var root : Node__46230540<VideoId__498652803, Video__1035008865>;
+      var size : Nat__490723111
+    };
+  stable withdrawalCounter : [var Nat];
+  stable withdrawals :
+    {
+      var root :
+        Node__46230540<WithdrawalId__526707137, WithdrawalRequest__1056071284>;
+      var size : Nat__490723111
+    }
+};

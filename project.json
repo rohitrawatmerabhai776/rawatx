@@ -1,0 +1,25 @@
+{
+  "overview": "RawatX is a mobile-first short video reels platform with an integrated coin earning system. Users scroll through vertical video feeds, create and upload their own reels, earn coins by watching ads and daily logins, and withdraw earnings to their wallet.",
+  "features": [
+    "Vertical scrolling video feed with like, comment, share and follow",
+    "Video upload with captions and hashtags",
+    "Coin earning via ad watching and daily login bonus",
+    "Referral system for bonus coins",
+    "Wallet with coin-to-rupee conversion and withdrawal",
+    "User search and trending hashtags",
+    "Public profiles with follower stats and video grid",
+    "Dark theme mobile-first UI"
+  ],
+  "category": "social",
+  "tags": [
+    "social-media",
+    "short-video",
+    "reels",
+    "earning",
+    "coins",
+    "wallet",
+    "mobile",
+    "dark-theme"
+  ],
+  "last_updated": "2026-04-15T05:06:11.934Z"
+}

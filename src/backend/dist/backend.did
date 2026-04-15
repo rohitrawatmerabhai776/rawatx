@@ -1,0 +1,120 @@
+type _ImmutableObjectStorageRefillResult = 
+ record {
+   success: opt bool;
+   topped_up_amount: opt nat;
+ };
+type _ImmutableObjectStorageRefillInformation = record {
+                                                  proposed_top_up_amount:
+                                                   opt nat;};
+type _ImmutableObjectStorageCreateCertificateResult = 
+ record {
+   blob_hash: text;
+   method: text;
+ };
+type WithdrawalStatus = 
+ variant {
+   completed;
+   pending;
+ };
+type WithdrawalRequestPublic = 
+ record {
+   createdAt: Timestamp;
+   id: WithdrawalId;
+   rupeeAmount: nat;
+   status: WithdrawalStatus;
+   userId: UserId;
+ };
+type WithdrawalId = nat;
+type VideoPublic = 
+ record {
+   caption: text;
+   commentsCount: nat;
+   createdAt: Timestamp;
+   hashtags: vec text;
+   id: VideoId;
+   isPublished: bool;
+   likesCount: nat;
+   storageKey: ExternalBlob;
+   uploaderId: UserId;
+   viewsCount: nat;
+ };
+type VideoId = nat;
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserProfilePublic = 
+ record {
+   avatarStorageKey: opt ExternalBlob;
+   bio: text;
+   createdAt: Timestamp;
+   displayName: text;
+   followerCount: nat;
+   followingCount: nat;
+   isPrivate: bool;
+   userId: UserId;
+   username: text;
+ };
+type UserId = principal;
+type Timestamp = int;
+type ExternalBlob = blob;
+type CommentId = nat;
+type Comment = 
+ record {
+   authorId: UserId;
+   createdAt: Timestamp;
+   id: CommentId;
+   "text": text;
+   videoId: VideoId;
+ };
+service : {
+  _immutableObjectStorageBlobsAreLive: (hashes: vec blob) -> (vec bool) query;
+  _immutableObjectStorageBlobsToDelete: () -> (vec blob) query;
+  _immutableObjectStorageConfirmBlobDeletion: (blobs: vec blob) -> ();
+  _immutableObjectStorageCreateCertificate: (blobHash: text) ->
+   (_ImmutableObjectStorageCreateCertificateResult);
+  _immutableObjectStorageRefillCashier: (refillInformation:
+   opt _ImmutableObjectStorageRefillInformation) ->
+   (_ImmutableObjectStorageRefillResult);
+  _immutableObjectStorageUpdateGatewayPrincipals: () -> ();
+  _initializeAccessControl: () -> ();
+  addComment: (videoId: VideoId, "text": text) -> (Comment);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  createWithdrawalRequest: (rupeeAmount: nat) -> (WithdrawalRequestPublic);
+  followUser: (userId: UserId) -> (bool);
+  getCallerUserProfile: () -> (opt UserProfilePublic) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getCoinBalance: () -> (nat) query;
+  getComments: (videoId: VideoId) -> (vec Comment) query;
+  getFeed: (offset: nat, limit: nat) -> (vec VideoPublic) query;
+  getFollowers: (userId: UserId) -> (vec UserProfilePublic) query;
+  getFollowing: (userId: UserId) -> (vec UserProfilePublic) query;
+  getLikeCount: (videoId: VideoId) -> (nat) query;
+  getMyReferralCode: () -> (text);
+  getRupeeEquivalent: (coins: nat) -> (nat) query;
+  getTrendingHashtags: (limit: nat) -> (vec record {
+                                              text;
+                                              nat;
+                                            }) query;
+  getUserProfile: (userId: UserId) -> (opt UserProfilePublic) query;
+  getUserVideos: (userId: UserId) -> (vec VideoPublic) query;
+  getVideo: (videoId: VideoId) -> (opt VideoPublic) query;
+  getWithdrawalHistory: () -> (vec WithdrawalRequestPublic) query;
+  isCallerAdmin: () -> (bool) query;
+  isFollowing: (userId: UserId) -> (bool) query;
+  markWithdrawalCompleted: (withdrawalId: WithdrawalId) -> (bool);
+  recordAdWatch: () -> (nat);
+  recordDailyLogin: () -> (nat);
+  recordReferralReward: (referrerCode: text) -> (bool);
+  recordVideoView: (videoId: VideoId) -> ();
+  saveCallerUserProfile: (displayName: text, username: text, bio: text,
+   isPrivate: bool) -> ();
+  searchUsers: (searchTerm: text) -> (vec UserProfilePublic) query;
+  toggleLike: (videoId: VideoId) -> (bool);
+  unfollowUser: (userId: UserId) -> (bool);
+  updateCallerAvatar: (avatar: ExternalBlob) -> ();
+  uploadVideo: (storageKey: ExternalBlob, caption: text, videoHashtags:
+   vec text) -> (VideoPublic);
+}

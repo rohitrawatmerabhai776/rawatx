@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-display: "Space Grotesk";
+    --font-body: "DM Sans";
+    --font-mono: "Geist Mono";
+    --radius: 0.5rem;
+
+    --background: 0.98 0.005 240;
+    --foreground: 0.15 0.01 240;
+    --card: 0.99 0.002 240;
+    --card-foreground: 0.15 0.01 240;
+    --popover: 0.99 0.002 240;
+    --popover-foreground: 0.15 0.01 240;
+
+    --primary: 0.5 0.18 240;
+    --primary-foreground: 0.98 0.002 240;
+
+    --secondary: 0.95 0.008 240;
+    --secondary-foreground: 0.25 0.01 240;
+    --muted: 0.95 0.008 240;
+    --muted-foreground: 0.5 0.005 240;
+
+    --accent: 0.75 0.24 195;
+    --accent-foreground: 0.1 0.01 240;
+
+    --destructive: 0.55 0.22 25;
+    --destructive-foreground: 0.98 0.002 25;
+
+    --border: 0.9 0.005 240;
+    --input: 0.9 0.005 240;
+    --ring: 0.75 0.24 195;
+
+    --chart-1: 0.68 0.22 200;
+    --chart-2: 0.75 0.2 240;
+    --chart-3: 0.65 0.18 150;
+    --chart-4: 0.72 0.19 190;
+    --chart-5: 0.6 0.16 210;
+
+    --sidebar: 0.18 0.015 240;
+    --sidebar-foreground: 0.95 0.008 240;
+    --sidebar-primary: 0.72 0.2 200;
+    --sidebar-primary-foreground: 0.14 0.012 240;
+    --sidebar-accent: 0.75 0.24 195;
+    --sidebar-accent-foreground: 0.14 0.012 240;
+    --sidebar-border: 0.28 0.015 240;
+    --sidebar-ring: 0.75 0.24 195;
+  }
+
+  .dark {
+    --background: 0.14 0.012 240;
+    --foreground: 0.95 0.008 240;
+    --card: 0.18 0.015 240;
+    --card-foreground: 0.95 0.008 240;
+    --popover: 0.22 0.018 240;
+    --popover-foreground: 0.95 0.008 240;
+
+    --primary: 0.72 0.2 200;
+    --primary-foreground: 0.14 0.012 240;
+
+    --secondary: 0.22 0.015 240;
+    --secondary-foreground: 0.85 0.008 240;
+    --muted: 0.22 0.015 240;
+    --muted-foreground: 0.55 0.008 240;
+
+    --accent: 0.75 0.24 195;
+    --accent-foreground: 0.1 0.01 240;
+
+    --destructive: 0.65 0.19 22;
+    --destructive-foreground: 0.95 0.008 240;
+
+    --border: 0.28 0.015 240;
+    --input: 0.28 0.015 240;
+    --ring: 0.75 0.24 195;
+
+    --chart-1: 0.68 0.22 200;
+    --chart-2: 0.75 0.2 240;
+    --chart-3: 0.65 0.18 150;
+    --chart-4: 0.72 0.19 190;
+    --chart-5: 0.6 0.16 210;
+
+    --sidebar: 0.18 0.015 240;
+    --sidebar-foreground: 0.95 0.008 240;
+    --sidebar-primary: 0.72 0.2 200;
+    --sidebar-primary-foreground: 0.14 0.012 240;
+    --sidebar-accent: 0.75 0.24 195;
+    --sidebar-accent-foreground: 0.14 0.012 240;
+    --sidebar-border: 0.28 0.015 240;
+    --sidebar-ring: 0.75 0.24 195;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("/assets/fonts/SpaceGrotesk.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/assets/fonts/DMSans.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Geist Mono";
+  src: url("/assets/fonts/GeistMono.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-accent {
+    @apply bg-accent text-accent-foreground hover:bg-accent/90 font-semibold rounded-xl px-6 py-2.5 transition-smooth;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 font-semibold rounded-xl px-6 py-2.5 transition-smooth;
+  }
+
+  .reel-container {
+    @apply w-full h-screen bg-background flex items-center justify-center overflow-hidden;
+  }
+
+  .bottom-nav-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .bottom-nav-height {
+    height: calc(64px + env(safe-area-inset-bottom, 0px));
+  }
+
+  .content-with-nav {
+    height: calc(100vh - 64px - env(safe-area-inset-bottom, 0px));
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 20px oklch(0.75 0.24 195 / 0.4);
+  }
+
+  .text-gradient-cyan {
+    background: linear-gradient(
+      135deg,
+      oklch(0.75 0.24 195),
+      oklch(0.65 0.2 210)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass-card {
+    @apply bg-card backdrop-blur-sm border border-border rounded-2xl;
+  }
+
+  .tab-active-indicator {
+    background: linear-gradient(
+      180deg,
+      oklch(0.75 0.24 195),
+      oklch(0.65 0.2 210)
+    );
+  }
+}
+
+@keyframes sparkle-twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.75);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.25);
+  }
+}
